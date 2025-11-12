@@ -362,10 +362,27 @@ function trackEvent(category, action, label) {
     console.log(`Event: ${category} - ${action} - ${label}`);
 }
 
-// Track resume downloads
-document.querySelectorAll('a[download]').forEach(link => {
-    link.addEventListener('click', () => {
+// Resume Download and Open Functionality
+document.querySelectorAll('.resume-download-btn').forEach(resumeBtn => {
+    resumeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const resumeUrl = resumeBtn.getAttribute('href');
+
+        // Track analytics event
         trackEvent('Resume', 'Download', 'Resume PDF');
+
+        // Open PDF in new tab
+        window.open(resumeUrl, '_blank');
+
+        // Trigger download simultaneously
+        const downloadLink = document.createElement('a');
+        downloadLink.href = resumeUrl;
+        downloadLink.download = 'Rahul-Garg-Resume.pdf';
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     });
 });
 
