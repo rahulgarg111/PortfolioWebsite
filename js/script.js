@@ -288,7 +288,8 @@ console.log('%c📧 Reach out: rahul.garg4489@gmail.com', 'color: #6c757d; font-
 if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
-        img.src = img.dataset.src;
+        // Only swap when a deferred source is provided; native lazy loading handles the rest
+        if (img.dataset.src) img.src = img.dataset.src;
     });
 } else {
     // Fallback for browsers that don't support lazy loading
